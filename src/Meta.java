@@ -8,22 +8,25 @@ import java.io.InputStreamReader;
 public class Meta {
     private static final int NAME_LENGTH = 10;
     public static void main(String[] args) {
-        StringBuilder randomName = new StringBuilder();
-        for (int i = 0; i < NAME_LENGTH; i++) {
-            randomName.append((char)((int)(Math.random() * 25) + 'a'));
+        if (args.length == 0) args = new String[] {"Hello!"};
+        for (int j = 0; j < args.length; j++) {
+            StringBuilder randomName = new StringBuilder();
+            for (int i = 0; i < NAME_LENGTH; i++) {
+                randomName.append((char) ((int) (Math.random() * 25) + 'a'));
+            }
+            randomName.append(".java");
+            File file = new File(randomName.toString());
+            writeProgram(file,args[j]);
+            compileProgram(file);
+            runProgram(file);
         }
-        randomName.append(".java");
-        File file = new File(randomName.toString());
-        writeProgram(file);
-        compileProgram(file);
-        runProgram(file);
     }
-    public static void writeProgram(File file) {
+    public static void writeProgram(File file, String msg) {
         System.out.println("Writing " + file);
         try {
             FileWriter out = new FileWriter(file);
             String className = className(file);
-            out.write(String.format("public class %s { public static void main(String[] args) { System.out.println(\"Hello!\"); } }",className));
+            out.write(String.format("public class %s { public static void main(String[] args) { System.out.println(\"" + msg + "\"); } }",className));
             out.close();
         } catch (Exception e) {
             System.err.println("Error writing to '" + file + "'.");
