@@ -17,7 +17,9 @@ public class Meta {
             randomName.append(".java");
             File file = new File(randomName.toString());
             writeProgram(file,args[j]);
+            System.out.println();
             compileProgram(file);
+            System.out.println();
             runProgram(file);
         }
     }
