@@ -81,12 +81,12 @@ public class Meta {
         if( osName.equals( "Windows NT" ) || osName.equals("Windows 10") )
         {
             cmd[0] = "cmd.exe" ;
-            cmd[1] = "/C" ;
+            cmd[1] = "/C start cmd" ;
             cmd[2] = args;
         }
         else if ( osName.equals("Windows 8.1")) {
             cmd[0] = "cmd";
-            cmd[1] = "/c";
+            cmd[1] = "/c start cmd";
             cmd[2] = args;
         }
         else if( osName.equals( "Windows 95" ) )
