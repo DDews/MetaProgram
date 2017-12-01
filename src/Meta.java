@@ -1,5 +1,3 @@
-import com.sun.org.apache.xalan.internal.xsltc.compiler.CompilerException;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
@@ -41,9 +39,6 @@ public class Meta {
             System.out.println(file.getAbsoluteFile());
             Process pro = Runtime.getRuntime().exec("javac " + file.getAbsoluteFile());
             pro.waitFor();
-            if (pro.exitValue() != 0) {
-                throw new CompilerException("Error compiling program " + file);
-            }
         }
         catch (Exception e) {
             System.err.println("Error compiling " + file + ".");
@@ -66,7 +61,8 @@ public class Meta {
         System.out.println("Running " + file);
         String className = className(file);
         try {
-            Process pro = Runtime.getRuntime().exec("java " + className);
+            String[] cmd = getCmd("java " + className);
+            Process pro = Runtime.getRuntime().exec(cmd);
             BufferedReader in = new BufferedReader(new InputStreamReader(pro.getInputStream()));
             String line;
             while ((line = in.readLine()) != null) {
@@ -77,6 +73,28 @@ public class Meta {
             System.err.println("Error occured when attempting to run " + file);
             e.printStackTrace();
         }
+    }
+    public static String[] getCmd(String args) {
+        String osName = System.getProperty("os.name" );
+        String[] cmd = new String[3];
+        if( osName.equals( "Windows NT" ) || osName.equals("Windows 10") )
+        {
+            cmd[0] = "cmd.exe" ;
+            cmd[1] = "/C" ;
+            cmd[2] = args;
+        }
+        else if( osName.equals( "Windows 95" ) )
+        {
+            cmd[0] = "command.com" ;
+            cmd[1] = "/C" ;
+            cmd[2] = args;
+        } else {
+            System.out.println(osName);
+            cmd[0] = "/bin/sh";
+            cmd[1] = "-c";
+            cmd[2] = args;
+        }
+        return cmd;
     }
     public static String separator() {
         return System.getProperty("file.separator");
