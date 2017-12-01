@@ -37,7 +37,7 @@ public class Meta {
         System.out.println("Compiling " + file);
         try {
             System.out.println(file.getAbsoluteFile());
-            String[] cmd = getCmd("javac " + file.getAbsoluteFile());
+            String[] cmd = getCmd("javac " + file.getName());
             Process pro = Runtime.getRuntime().exec(cmd);
             pro.waitFor();
         }
@@ -86,7 +86,7 @@ public class Meta {
         }
         else if ( osName.equals("Windows 8.1")) {
             cmd[0] = "cmd";
-            cmd[1] = "/c start cmd";
+            cmd[1] = "/c";
             cmd[2] = args;
         }
         else if( osName.equals( "Windows 95" ) )
