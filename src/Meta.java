@@ -57,7 +57,6 @@ public class Meta {
         System.out.println("Compiling " + file + " ...");
 
         try {
-            //System.out.println(file.getAbsoluteFile());
             String[] cmd = getCmd("javac " + file.getName());
             Process pro = Runtime.getRuntime().exec(cmd);
             pro.waitFor();
@@ -95,9 +94,9 @@ public class Meta {
 
     private static String[] getCmd(String args) {
         String osName = System.getProperty("os.name");
-
         String[] cmd = new String[3];
-        if (osName.equals("Windows NT") ||  osName.equals("Windows 8.1") || osName.equals("Windows 10")) {
+        
+        if (osName.equals("Windows NT") || osName.equals("Windows 8.1") || osName.equals("Windows 10")) {
             cmd[0] = "cmd.exe" ;
             cmd[1] = "/C" ;
             cmd[2] = args;

@@ -7,39 +7,32 @@ import java.util.List;
 public class MetaTest {
 
     public static void main(String[] args) throws Exception {
-        File[] initialJava = numJavaFiles();
-        File[] initialClass = numClassFiles();
+        File[] initialJava = new File(".").listFiles(new JavaFileFilter());
+        File[] initialClass = new File(".").listFiles(new ClassFileFilter());
 
         System.out.println("");
         System.out.println("Number of .java files: " + initialJava.length);
         System.out.println("Number of .class files: " + initialClass.length);
 
-        Meta.main(new String[] {"hello!", "What?", "Ok"});
+        String[] metaArgs = new String[] {"hello!", "What?", "Ok"};
+        Meta.main(metaArgs);
 
-        File[] newJava = numJavaFiles();
-        File[] newClass = numClassFiles();
+        File[] newJava = new File(".").listFiles(new JavaFileFilter());
+        File[] newClass = new File(".").listFiles(new ClassFileFilter());
 
         List<File> diffJava = diff(initialJava,newJava);
         List<File> diffClass = diff(initialClass,newClass);
 
-        if (newJava.length < initialJava.length + 3) {
+        if (newJava.length < initialJava.length + metaArgs.length) {
             throw new Exception("Meta should create 3 new .java files");
         }
-        if (newClass.length < initialClass.length + 3) {
+        if (newClass.length < initialClass.length + metaArgs.length) {
             throw new Exception("Meta should create 3 new .class files");
         }
 
         System.out.println("");
         System.out.println("Number of NEW .java files: " + diffJava.size() + ": " + diffJava);
         System.out.println("Number of NEW .class files: " + diffClass.size() + ": " + diffClass);
-    }
-
-    private static File[] numJavaFiles() {
-        return new File(".").listFiles(new JavaFileFilter());
-    }
-
-    private static File[] numClassFiles() {
-        return new File(".").listFiles(new ClassFileFilter());
     }
 
     private static List<File> diff(File[] a, File[] b) {
