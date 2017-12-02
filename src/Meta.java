@@ -5,36 +5,63 @@ import java.io.InputStreamReader;
 
 public class Meta {
     private static final int NAME_LENGTH = 10;
+
     public static void main(String[] args) {
-        if (args.length == 0) args = new String[] {"Hello!"};
-        for (int j = 0; j < args.length; j++) {
+
+        if (args.length == 0) {
+            args = new String[] {"Hello!"};
+        }
+
+        for (int i = 0; i < args.length; i++) {
             StringBuilder randomName = new StringBuilder();
-            for (int i = 0; i < NAME_LENGTH; i++) {
-                randomName.append((char) ((int) (Math.random() * 25) + 'a'));
+
+            // generate a list of random lowercase characters
+            for (int j = 0; j < NAME_LENGTH; j++) {
+                randomName.append((char) ((int) (Math.random() * 26) + 'a'));
             }
             randomName.append(".java");
+
             File file = new File(randomName.toString());
-            writeProgram(file,args[j]);
-            System.out.println();
+
+            writeProgram(file,args[i]);
+            System.out.println("");
+
             compileProgram(file);
-            System.out.println();
+            System.out.println("");
+
             runProgram(file);
         }
     }
-    public static void writeProgram(File file, String msg) {
-        System.out.println("Writing " + file);
+
+    private static void writeProgram(File file, String msg) {
+
+        System.out.println("\nWriting " + file + " ...");
+
         try {
             FileWriter out = new FileWriter(file);
-            String className = className(file);
-            out.write(String.format("public class %s { public static void main(String[] args) { System.out.println(\"" + msg + "\"); } }",className));
+            String className = file.getName().split(".java")[0];
+
+            StringBuilder contents = new StringBuilder();
+
+            contents.append("public class %s {\n");
+            contents.append("\tpublic static void main(String[] args) {\n");
+            contents.append("\t\tSystem.out.println(\"Hello, world! My name is: ");
+            contents.append(className + " and I have come to say... " + msg + "\");");
+            contents.append("\n\t}\n}\n");
+
+            out.write(String.format(contents.toString(), className));
             out.close();
-        } catch (Exception e) {
-            System.err.println("Error writing to '" + file + "'.");
+        }
+        catch (Exception e) {
+            System.err.println("Error writing to: " + file);
             e.printStackTrace();
         }
     }
-    public static void compileProgram(File file) {
+
+    private static void compileProgram(File file) {
+
         System.out.println("Compiling " + file);
+
         try {
             System.out.println(file.getAbsoluteFile());
             String[] cmd = getCmd("javac " + file.getName());
@@ -46,10 +73,12 @@ public class Meta {
             e.printStackTrace();
         }
     }
-    public static String className(File file) {
-        return file.getName().split(".java")[0];
-    }
-    public static String getPackage() {
+    //
+    // public static String className(File file) {
+    //     return file.getName().split(".java")[0];
+    // }
+
+    private static String getPackage() {
         try {
             return Class.forName("Meta").getClass().getPackage().toString();
         } catch (Exception e) {
@@ -58,9 +87,10 @@ public class Meta {
         }
         return "unknown";
     }
-    public static void runProgram(File file) {
+
+    private static void runProgram(File file) {
         System.out.println("Running " + file);
-        String className = className(file);
+        String className = file.getName().split(".java")[0];
         try {
             String[] cmd = getCmd("java " + className);
             Process pro = Runtime.getRuntime().exec(cmd);
@@ -75,7 +105,8 @@ public class Meta {
             e.printStackTrace();
         }
     }
-    public static String[] getCmd(String args) {
+
+    private static String[] getCmd(String args) {
         String osName = System.getProperty("os.name" );
         String[] cmd = new String[3];
         if( osName.equals( "Windows NT" ) || osName.equals("Windows 10") )
@@ -102,7 +133,8 @@ public class Meta {
         }
         return cmd;
     }
-    public static String separator() {
-        return System.getProperty("file.separator");
-    }
+
+    // private static String separator() {
+    //     return System.getProperty("file.separator");
+    // }
 }
