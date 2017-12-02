@@ -97,14 +97,9 @@ public class Meta {
         String osName = System.getProperty("os.name");
 
         String[] cmd = new String[3];
-        if (osName.equals("Windows NT") || osName.equals("Windows 10")) {
+        if (osName.equals("Windows NT") ||  osName.equals("Windows 8.1") || osName.equals("Windows 10")) {
             cmd[0] = "cmd.exe" ;
-            cmd[1] = "/C start cmd" ;
-            cmd[2] = args;
-        }
-        else if (osName.equals("Windows 8.1")) {
-            cmd[0] = "cmd";
-            cmd[1] = "/c";
+            cmd[1] = "/C" ;
             cmd[2] = args;
         }
         else if (osName.equals("Windows 95")) {
