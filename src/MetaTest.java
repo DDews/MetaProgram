@@ -59,7 +59,7 @@ public class MetaTest {
                 files.add(file);
             }
         }
-        
+
         return files;
     }
 
@@ -67,10 +67,7 @@ public class MetaTest {
         @Override
         public boolean accept(File f) {
             String suffix = ".class";
-            if (f.getName().toLowerCase().endsWith(suffix)) {
-                return true;
-            }
-            return false;
+            return f.getName().toLowerCase().endsWith(suffix);
         }
     }
 
@@ -78,10 +75,7 @@ public class MetaTest {
         @Override
         public boolean accept(File f) {
             String suffix = ".java";
-            if (f.getName().toLowerCase().endsWith(".java")) {
-                return true;
-            }
-            return false;
+            return f.getName().toLowerCase().endsWith(suffix);
         }
     }
 }
