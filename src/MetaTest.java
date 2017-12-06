@@ -4,6 +4,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+// Program-Generating Program
+// Sample Functionality Test
+// ========================================
+// Ethan Johnston
+// CS 390L - Cognitive Science and AI
+// Dr. Jody Paul
+// 2 December 2017
+// ========================================
+// Collaborated with:
+//   -Daniel Dews
+//   -Harley Dutton
+//   -Heather DeMarco
+//   -Joseph Brennan
+
 public class MetaTest {
 
     public static void main(String[] args) throws Exception {
@@ -14,7 +28,7 @@ public class MetaTest {
         System.out.println("Number of .java files: " + initialJava.length);
         System.out.println("Number of .class files: " + initialClass.length);
 
-        String[] metaArgs = new String[] {"hello!", "What?", "Ok"};
+        String[] metaArgs = new String[] {"FUS", "RO", "DAH"};
         Meta.main(metaArgs);
 
         File[] newJava = new File(".").listFiles(new JavaFileFilter());

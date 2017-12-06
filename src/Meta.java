@@ -3,6 +3,20 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
 
+// Program-Generating Program
+// Main Program Generator
+// ========================================
+// Ethan Johnston
+// CS 390L - Cognitive Science and AI
+// Dr. Jody Paul
+// 2 December 2017
+// ========================================
+// Collaborated with:
+//   -Daniel Dews
+//   -Harley Dutton
+//   -Heather DeMarco
+//   -Joseph Brennan
+
 public class Meta {
     private static final int NAME_LENGTH = 10;
 
@@ -95,7 +109,7 @@ public class Meta {
     private static String[] getCmd(String args) {
         String osName = System.getProperty("os.name");
         String[] cmd = new String[3];
-        
+
         if (osName.equals("Windows NT") || osName.equals("Windows 8.1") || osName.equals("Windows 10")) {
             cmd[0] = "cmd.exe" ;
             cmd[1] = "/C" ;
